@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, request
 from cycle import Cycle, Notice
 from datetime import datetime
+from waitress import serve
 app = Flask(__name__)
 
 
@@ -19,7 +20,6 @@ def dashboard(name=None):
     notices = Notice.load_list(notices_fname)[::-1]
     today = datetime.today().weekday()
     chef = Cycle.load('cooking_schedule')[today]
-    print(chef)
     return render_template('dashboard.html', cycles=cycle_insts, notices=notices, chef=chef)
 
 
@@ -34,7 +34,11 @@ def update_cycle(iden):
 def add_notice():
     body = request.form.get('body')
     author = request.form.get('author')
-    n = Notice(body, author)
+    n = Notice(body, author, ip=request.remote_addr)
+    print(body)
+    print(author)
+    print(n.ip)
+    print("-----")
     notices = Notice.load_list(notices_fname)
     notices.append(n)
     Notice.save_list(notices, notices_fname)
@@ -59,3 +63,6 @@ def page_not_found(e):
 @app.errorhandler(Exception)
 def all_exception_handler(error):
    return render_template('500.html'), 500 
+
+if __name__=="__main__":
+    serve(app, host='0.0.0.0', port=5000)

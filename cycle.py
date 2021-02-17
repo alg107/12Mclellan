@@ -34,11 +34,12 @@ class Cycle:
 
 
 class Notice:
-    def __init__(self, text, author):
+    def __init__(self, text, author, ip=None):
         self.text = text
         self.author = author
         self.time = datetime.now()
         self.identifier = abs(hash(self.time))
+        self.ip = ip
         print(self.time)
 
     @staticmethod
