@@ -2,7 +2,43 @@
 {% block title %}
 Dashboard
 {% endblock %}
+
 {% block content %}
-<h1>Hello There</h1>
+<h1>Dashboard v1.0</h1>
+<h2>Cleaning Cycles</h2>
+{% for c in cycles %}
+<div class='jumbotron'>
+<h2>{{ c.title }}</h2>
+<p class='indented'>Currently: {{ c.current() }}</p>
+<a href='javascript:cycle_increment(&quot;{{c.identifier}}&quot;)' class="btn btn-success btn-lg active" role="button">Done!</a>
+</div>
+{% endfor %}
+<hr>
+<h2>Who's Cooking?</h2>
+<h4 class='indented'>{{ chef }}</h4>
+<hr>
+<h2>Noticeboard</h2>
+{% for c in notices %}
+<div class='jumbotron'>
+<p>{{ c.text }}</p>
+<p class='indented'>From: {{ c.author }}</p>
+<a href='javascript:delete_notice(&quot;{{c.identifier}}&quot;)' class="btn btn-danger btn-sm active" role="button">Delete</a>
+</div>
+{% endfor %}
+
+<form action='/add_notice' method='post'>
+  <div class="form-group">
+    <label for="text_input">Notice:</label>
+    <input type="text" class="form-control" id="text_input" placeholder="Message" name='body'>
+  </div>
+  <div class="form-group">
+    <label for="author_input">From:</label>
+    <input type="text" class="form-control" id="author_input" placeholder="Author" name='author'>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<br>
 {% endblock %}
+
+
 
