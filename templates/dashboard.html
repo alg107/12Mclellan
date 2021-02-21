@@ -6,7 +6,7 @@ Dashboard
 {% block content %}
 <h1>Dashboard v1.0</h1>
 <div class='row'>
-    <div class='col-lg-6'>
+    <div class='col-lg-4'>
 <h2>Cleaning Cycles</h2>
 {% for c in cycles %}
 <div class='jumbotron'>
@@ -16,7 +16,7 @@ Dashboard
 </div>
 {% endfor %}
 </div>
-<div class='col-lg-6'>
+<div class='col-lg-4'>
 <h2>Who's Cooking?</h2>
 <h4 class='indented'>{{ chef }}</h4>
 <hr>
@@ -41,6 +41,20 @@ Dashboard
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 <br>
+</div>
+
+<div class='col-lg-4'>
+<h2>Whiteboard</h2>
+<br>
+<canvas id="noticecanvas">
+    Your browser doesn't support the whiteboard :(
+</canvas>
+<button id='clearwhiteboard'>Clear</button>
+<button id='submitwhiteboard'>Send</button>
+<div id="prevdrawingcontainer" style="display:none;"> 
+    <img src="/static/img/whiteboard.png" id="prevdrawing" class="top" /> 
+</div> 
+
 </div>
 {% endblock %}
 

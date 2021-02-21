@@ -1,7 +1,9 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, flash
 from cycle import Cycle, Notice
 from datetime import datetime
 from waitress import serve
+import re
+import base64
 app = Flask(__name__)
 
 
@@ -28,7 +30,8 @@ def update_cycle(iden):
     c = Cycle.load(iden)
     c.advance()
     c.save()
-    return 'Success!'
+    return redirect('/')
+    #return 'Success!'
 
 @app.route('/add_notice', methods=['POST'])
 def add_notice():
@@ -53,6 +56,14 @@ def delete_notice(iden):
             Notice.save_list(notices, notices_fname)
     return "Deleted :)"
 
+@app.route('/upload_whiteboard', methods=['POST'])
+def upload_whiteboard():
+    imgdata = request.form.get('imgBase64')
+    image_data = re.sub('^data:image/.+;base64,', '', imgdata)
+    print(image_data)
+    with open("static/img/whiteboard.png", "wb") as fh:
+        fh.write(base64.b64decode(image_data))
+    return "Not working"
 
 
 @app.errorhandler(404)

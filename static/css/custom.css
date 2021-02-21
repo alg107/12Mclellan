@@ -2,6 +2,13 @@
     margin-left: 10px;
 }
 
+#noticecanvas {
+    cursor: crosshair;
+    width: 100;
+    height: 100;
+    border: 1px solid blue;
+}
+
 /*body {
   background-image: url("/static/img/panda.gif");
   background-repeat: repeat;
